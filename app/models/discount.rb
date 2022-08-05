@@ -1,4 +1,4 @@
-class Discount < ApplicatonRecord
+class Discount < ApplicationRecord
   validates_presence_of :percent
   validates_presence_of :threshold
 
