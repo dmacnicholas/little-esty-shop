@@ -1,5 +1,6 @@
 class Discount < ApplicationRecord
-  validates_presence_of :percent
+  validates :percent, presence: true,
+    :numericality => { :greater_than => 0, :less_than_or_equal_to => 100 }
   validates_presence_of :threshold
 
   belongs_to :merchant
