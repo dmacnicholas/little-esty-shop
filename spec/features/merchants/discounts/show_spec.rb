@@ -29,8 +29,16 @@ RSpec.describe 'discounts show page' do
 
     expect(page).to have_content("Update Discount")
     click_link("Update Discount")
-    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}/edit"
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}/edit")
+    expect(page).to have_field('Percent Discount', with: '25')
+    expect(page).to have_field('Quantity Threshold', with: '10')
 
+    fill_in('Percent Discount', with: '30')
+    click_on("Update Discount")
 
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}")
+
+    expect(page).to have_content("Percent Discount: 30%")
+    expect(page).to have_content("Quantity Threshold: 10")
   end
 end
