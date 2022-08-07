@@ -14,6 +14,6 @@ RSpec.describe 'discounts show page' do
     expect(page).to have_content(discount_1.percent)
     expect(page).to have_content(discount_1.threshold)
     expect(page).to_not have_content(discount_2.percent)
-    expect(page).to_not have_content(discount_1.threshold)
+    expect(page).to_not have_content(discount_2.threshold)
   end
 end
