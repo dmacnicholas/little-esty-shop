@@ -46,6 +46,11 @@ RSpec.describe 'discounts index page' do
     click_link("Create New Discount")
     expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/new")
 
+    fill_in 'Percent Discount', with: '130'
+    fill_in 'Quantity Threshold', with: '27'
+    click_button 'Submit'
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/new")
+
     fill_in 'Percent Discount', with: '30'
     fill_in 'Quantity Threshold', with: '27'
     click_button 'Submit'
