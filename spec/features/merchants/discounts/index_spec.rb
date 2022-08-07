@@ -6,7 +6,7 @@ RSpec.describe 'discounts index page' do
     merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
 
     discount_1 = Discount.create!(percent: 25, threshold: 10, merchant_id: merchant_1.id)
-    discount_2 = Discount.create!(percent: 15, threshold: 5, merchant_id: merchant_1.id)
+    discount_2 = Discount.create!(percent: 15, threshold: 15, merchant_id: merchant_1.id)
     discount_3 = Discount.create!(percent: 20, threshold: 12, merchant_id: merchant_2.id)
 
     visit "/merchants/#{merchant_1.id}/discounts"
@@ -35,7 +35,7 @@ RSpec.describe 'discounts index page' do
     merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
 
     discount_1 = Discount.create!(percent: 25, threshold: 10, merchant_id: merchant_1.id)
-    discount_2 = Discount.create!(percent: 15, threshold: 5, merchant_id: merchant_1.id)
+    discount_2 = Discount.create!(percent: 15, threshold: 15, merchant_id: merchant_1.id)
     discount_3 = Discount.create!(percent: 20, threshold: 12, merchant_id: merchant_2.id)
 
     visit "/merchants/#{merchant_1.id}/discounts"
@@ -65,7 +65,7 @@ RSpec.describe 'discounts index page' do
     merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
 
     discount_1 = Discount.create!(percent: 25, threshold: 10, merchant_id: merchant_1.id)
-    discount_2 = Discount.create!(percent: 15, threshold: 5, merchant_id: merchant_1.id)
+    discount_2 = Discount.create!(percent: 15, threshold: 15, merchant_id: merchant_1.id)
     discount_3 = Discount.create!(percent: 20, threshold: 12, merchant_id: merchant_2.id)
 
     visit "/merchants/#{merchant_1.id}/discounts"
