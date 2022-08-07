@@ -5,6 +5,7 @@
       <h3> <%= link_to "View Discount #{discount.id}", "/merchants/#{@merchant.id}/discounts/#{discount.id}" %> </h3>
       <p>Percent Discount: <%= discount.percent %>%</p>
       <p>Quantity Threshold: <%= discount.threshold %></p>
+      <p><%= link_to "Delete Discount #{discount.id}", "/merchant/#{@merchant.id}/discounts/#{discount.id}", method: :delete %></p>
     </div>
     <% end %>
 
