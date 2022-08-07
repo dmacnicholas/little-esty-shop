@@ -30,6 +30,23 @@ class DiscountsController < ApplicationController
     redirect_to "/merchants/#{merchant.id}/discounts"
   end
 
+  def edit
+    @discount = Discount.find(params[:id])
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def update
+    merchant = Merchant.find(params[:merchant_id])
+    discount = Discount.find(params[:id])
+    discount.update(discount_params)
+    if discount.save
+      redirect_to "/merchants/#{merchant.id}/discounts/#{discount.id}"
+    else
+      redirect_to "/merchants/#{merchant.id}/discounts/#{discount.id}/edit"
+      flash[:error] = "Error: #{discount.errors.full_messages.join(", ")}"
+    end
+  end
+
   private
   def discount_params
     params.permit(:percent, :threshold, :merchant_id)
