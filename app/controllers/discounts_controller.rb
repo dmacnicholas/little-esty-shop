@@ -19,7 +19,7 @@ class DiscountsController < ApplicationController
       redirect_to "/merchants/#{merchant.id}/discounts"
     else
       redirect_to "/merchants/#{merchant.id}/discounts/new"
-      flash[:error] = "Error #{discount.errors.full_messages.join(", ")}"
+      flash[:error] = "Error: #{discount.errors.full_messages.join(", ")}"
     end
   end
 
