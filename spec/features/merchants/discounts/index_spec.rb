@@ -29,4 +29,30 @@ RSpec.describe 'discounts index page' do
     click_link("View Discount #{discount_1.id}")
     expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}")
   end
+
+  it 'has a link toa form to create a new discount' do
+    merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
+    merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
+
+    discount_1 = Discount.create!(percent: 25, threshold: 10, merchant_id: merchant_1.id)
+    discount_2 = Discount.create!(percent: 15, threshold: 5, merchant_id: merchant_1.id)
+    discount_3 = Discount.create!(percent: 20, threshold: 12, merchant_id: merchant_2.id)
+
+    visit "/merchants/#{merchant_1.id}/discounts"
+
+    expect(page).to_not have_content("Percent Discount: 30%")
+    expect(page).to_not have_content("Quantity Threshold: 27")
+    expect(page).to have_content("Create a New Discount")
+    click_link("Create New Discount")
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/new")
+
+    fill_in 'Percent Discount', with: '30'
+    fill_in 'Quantity Threshold', with: '27'
+    click_button 'Submit'
+
+    expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts")
+    expect(page).to have_content("Percent Discount: 30%")
+    expect(page).to have_content("Quantity Threshold: 27")
+  end
+
 end
