@@ -7,9 +7,10 @@ class InvoiceItem < ApplicationRecord
   validates_presence_of :created_at
   validates_presence_of :updated_at
 
-  belongs_to :item 
-  belongs_to :invoice 
-  has_many :transactions, through: :invoices 
-  # has_many :invoices, through: :items 
+  belongs_to :item
+  belongs_to :invoice
+  has_many :transactions, through: :invoice
+  has_many :merchants, through: :item
+  has_many :customers, through: :invoice
 
 end

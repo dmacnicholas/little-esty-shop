@@ -130,7 +130,7 @@ describe 'discounted revenue' do
       invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_1.id, quantity: 5, unit_price: item_3.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
 
-      expect(invoice_1.discounted_revenue).to eq(600)
+      expect(invoice_1.discounted_revenue).to eq(0)
     end
 
     it 'calculates that a bulk discount should be applied to some items but not all items' do
@@ -145,7 +145,7 @@ describe 'discounted revenue' do
       invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_1.id, quantity: 5, unit_price: item_3.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
 
-      expect(invoice_1.discounted_revenue).to eq(690)
+      expect(invoice_1.discounted_revenue).to eq(60)
     end
 
     it 'calculates that multiple bulk discounts should be applied to different items' do
@@ -161,7 +161,7 @@ describe 'discounted revenue' do
       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
       discount_2 = Discount.create!(percent: 30, threshold: 15, merchant_id: merchant_1.id)
 
-      expect(invoice_1.discounted_revenue).to eq(910)
+      expect(invoice_1.discounted_revenue).to eq(240)
     end
 
     it 'calculates that multiple bulk discounts but uses the one with the higher percentage regardless of threshold' do
@@ -177,7 +177,7 @@ describe 'discounted revenue' do
       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
       discount_2 = Discount.create!(percent: 15, threshold: 15, merchant_id: merchant_1.id)
 
-      expect(invoice_1.discounted_revenue).to eq(970)
+      expect(invoice_1.discounted_revenue).to eq(180)
     end
 
     it 'calculates that multiple bulk discounts for multiple merchants' do
@@ -194,6 +194,7 @@ describe 'discounted revenue' do
       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
       discount_2 = Discount.create!(percent: 30, threshold: 15, merchant_id: merchant_1.id)
 
-      expect(invoice_1.discounted_revenue).to eq(1410)
+      expect(invoice_1.discounted_revenue).to eq(240)
     end
+  end
 end
