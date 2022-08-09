@@ -191,4 +191,56 @@ RSpec.describe 'invoices show page' do
        expect(page).to have_content("Net Revenue: $1410")
      end
 
+     it 'has a link for each invoice item where a discount was applied' do
+       merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
+       merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
+       item_1 = Item.create!(name: "Watch", description: "Always a need to tell time", unit_price: 30, merchant_id: merchant_1.id, created_at: Time.now, updated_at: Time.now)
+       item_2 = Item.create!(name: "Crocs", description: "Worst and Best Shoes", unit_price: 40, merchant_id: merchant_1.id, created_at: Time.now, updated_at: Time.now)
+       item_3 = Item.create!(name: "Beanie", description: "Perfect for a cold day", unit_price: 50, merchant_id: merchant_2.id, created_at: Time.now, updated_at: Time.now)
+       customer_1 = Customer.create!(first_name: "James", last_name: "Franco", created_at: Time.now, updated_at: Time.now)
+       invoice_1 = customer_1.invoices.create!(status: 1, created_at: Time.now, updated_at: Time.now)
+       invoice_item_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 10, unit_price: item_1.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       invoice_item_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_1.id, quantity: 15, unit_price: item_2.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_1.id, quantity: 15, unit_price: item_3.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
+       discount_2 = Discount.create!(percent: 30, threshold: 15, merchant_id: merchant_1.id)
+
+       visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
+
+       within "#invoice_item-#{invoice_item_1.id}" do
+         expect(page).to have_link("Discount Applied")
+       end
+
+       within "#invoice_item-#{invoice_item_2.id}" do
+         expect(page).to have_link("Discount Applied")
+       end
+
+       within "#invoice_item-#{invoice_item_3.id}" do
+         expect(page).to_not have_link("Discount Applied")
+       end
+     end
+
+     it 'directs the link to the discount show page' do
+       merchant_1 = Merchant.create!(name: "Schroeder-Jerde", created_at: Time.now, updated_at: Time.now)
+       merchant_2 = Merchant.create!(name: "Revtrics", created_at: Time.now, updated_at: Time.now)
+       item_1 = Item.create!(name: "Watch", description: "Always a need to tell time", unit_price: 30, merchant_id: merchant_1.id, created_at: Time.now, updated_at: Time.now)
+       item_2 = Item.create!(name: "Crocs", description: "Worst and Best Shoes", unit_price: 40, merchant_id: merchant_1.id, created_at: Time.now, updated_at: Time.now)
+       item_3 = Item.create!(name: "Beanie", description: "Perfect for a cold day", unit_price: 50, merchant_id: merchant_2.id, created_at: Time.now, updated_at: Time.now)
+       customer_1 = Customer.create!(first_name: "James", last_name: "Franco", created_at: Time.now, updated_at: Time.now)
+       invoice_1 = customer_1.invoices.create!(status: 1, created_at: Time.now, updated_at: Time.now)
+       invoice_item_1 = InvoiceItem.create!(item_id: item_1.id, invoice_id: invoice_1.id, quantity: 10, unit_price: item_1.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       invoice_item_2 = InvoiceItem.create!(item_id: item_2.id, invoice_id: invoice_1.id, quantity: 15, unit_price: item_2.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       invoice_item_3 = InvoiceItem.create!(item_id: item_3.id, invoice_id: invoice_1.id, quantity: 15, unit_price: item_3.unit_price, status: 2, created_at: Time.now, updated_at: Time.now)
+       discount_1 = Discount.create!(percent: 20, threshold: 10, merchant_id: merchant_1.id)
+       discount_2 = Discount.create!(percent: 30, threshold: 15, merchant_id: merchant_1.id)
+
+       visit "/merchants/#{merchant_1.id}/invoices/#{invoice_1.id}"
+
+       within "#invoice_item-#{invoice_item_1.id}" do
+         expect(page).to have_link("Discount Applied")
+         click_link("Discount Applied")
+         expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}")
+       end
+     end
+
 end
