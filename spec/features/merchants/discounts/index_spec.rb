@@ -24,7 +24,6 @@ RSpec.describe 'discounts index page' do
     end
 
     expect(page).to_not have_content(discount_3.percent)
-    expect(page).to_not have_content(discount_3.threshold)
     expect(page).to_not have_link("View Discount #{discount_3.id}")
     click_link("View Discount #{discount_1.id}")
     expect(current_path).to eq("/merchants/#{merchant_1.id}/discounts/#{discount_1.id}")
