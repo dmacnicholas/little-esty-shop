@@ -15,13 +15,13 @@
         <div class = "item">
         <p> Item: <%= item.name %> </p>
         <p> Quantity: <%= item.invoice_quantity(@invoice.id).first.quantity %> </p>
-        <p> Price: <%= number_to_currency(item.invoice_quantity(@invoice.id).first.unit_price / 100) %> </p>
+        <p> Price: <%= number_to_currency(item.invoice_quantity(@invoice.id).first.unit_price) %> </p>
         <p> Status: <%= item.invoice_quantity(@invoice.id).first.status%> </p>
         </div>
     <% end %>
 
 </div>
 
-Total Revenue: $<%=@invoice.total_price %>
-Total Discounts: $<%=@invoice.total_discount %>
-Net Revenue: $<%=@invoice.net_revenue %>
+<p>Total Revenue: $<%=@invoice.total_price %></p>
+<p>Total Discounts: $<%=@invoice.total_discount %></p>
+<p>Net Revenue: $<%=@invoice.net_revenue %></p>

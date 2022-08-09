@@ -1,18 +1,18 @@
 <h3>Invoice ID: <%= @invoice.id %></h3><br>
 
-<p>Status: <%= @invoice.status %></p><br>
-<p>Created At: <%= @invoice.created_at.strftime("%-m/%d/%y") %></p><br>
-<p>Customer Name: <%= @invoice.full_name %></p><br><br>
+<p>Status: <%= @invoice.status %></p>
+<p>Created At: <%= @invoice.created_at.strftime("%-m/%d/%y") %></p>
+<p>Customer Name: <%= @invoice.full_name %></p><br>
 
-<h3>Items on This Invoice:</h3><br>
+<h3>Items on This Invoice:</h3>
 
 <% @invoice.invoice_items.each do |invoice_item| %>
 <div id="invoice_item-<%= invoice_item.id %>">
 
-<p>Item Name: <%= invoice_item.item.name %></p><br>
-<p>Quantity Ordered: <%= invoice_item.quantity %></p><br>
-<p>Item Price: <%= invoice_item.unit_price %></p><br>
-<p>Invoice Item Status: <%= invoice_item.status %></p><br><br>
+<p>Item Name: <%= invoice_item.item.name %></p>
+<p>Quantity Ordered: <%= invoice_item.quantity %></p>
+<p>Item Price: <%= invoice_item.unit_price %></p>
+<p>Invoice Item Status: <%= invoice_item.status %></p>
 <% if invoice_item.discount_applied %>
   <%= link_to "Discount Applied", "/merchants/#{@merchant.id}/discounts/#{invoice_item.discount_applied.id}" %>
 <% end %>
@@ -24,8 +24,8 @@
       <% end %>
        </div>
   <% end %>
+<br>
 
-
-Total Revenue: $<%=@invoice.total_price %>
-Total Discounts: $<%=@invoice.total_discount %>
-Net Revenue: $<%=@invoice.net_revenue %>
+<p>Total Revenue: $<%=@invoice.total_price %></p>
+<p>Total Discounts: $<%=@invoice.total_discount %></p>
+<p>Net Revenue: $<%=@invoice.net_revenue %></p>
