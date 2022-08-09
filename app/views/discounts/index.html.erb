@@ -1,4 +1,4 @@
-<h1> Merchant Discounts </h1>
+<h1> <%= @merchant.name %> Discounts </h1>
 
 <% @merchant.discounts.each do |discount| %>
     <div id="discount-<%= discount.id %>">
