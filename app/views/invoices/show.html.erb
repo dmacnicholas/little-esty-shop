@@ -7,20 +7,22 @@
 <h3>Items on This Invoice:</h3><br>
 
 <% @invoice.invoice_items.each do |invoice_item| %>
-  <id="invoice_item-<%= invoice_item.id %>">
+<div id="invoice_item-<%= invoice_item.id %>">
 
 <p>Item Name: <%= invoice_item.item.name %></p><br>
 <p>Quantity Ordered: <%= invoice_item.quantity %></p><br>
 <p>Item Price: <%= invoice_item.unit_price %></p><br>
 <p>Invoice Item Status: <%= invoice_item.status %></p><br><br>
-
+<% if invoice_item.discount_applied %>
+  <%= link_to "Discount Applied", "/merchants/#{@merchant.id}/discounts/#{invoice_item.discount_applied.id}" %>
+<% end %>
 
 <%= form_with url: "/merchants/#{invoice_item.item.merchant_id}/invoices/#{@invoice.id}", method: :patch, local: true do |form| %>
       <%= form.select :status, [["packaged"], ["pending"], ["shipped"]] %>
       <%= form.submit "Update Item Status" %>
       <%= form.hidden_field :invoice_item_id, value: invoice_item.id %>
       <% end %>
-    <br><br>
+       </div>
   <% end %>
 
 
