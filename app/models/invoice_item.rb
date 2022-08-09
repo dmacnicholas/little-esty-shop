@@ -12,5 +12,10 @@ class InvoiceItem < ApplicationRecord
   has_many :transactions, through: :invoice
   has_many :merchants, through: :item
   has_many :customers, through: :invoice
+  has_many :discounts, through: :item
+
+  def discount_applied
+   discounts.where("discounts.threshold <= ?", quantity).order(percent: :desc).first
+  end
 
 end
